@@ -400,13 +400,16 @@ body {
   overflow-y: auto;
 }
 
+/* Garantindo altura mínima para visualização dos itens */
 .lista-revisao {
   padding: 20px;
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  flex: 1;
+  min-height: 200px;
+  max-height: 400px;
   overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .item-revisao {
@@ -1047,6 +1050,21 @@ body {
     transform: rotate(180deg);
   }
 
+  /* Adicionando scroll na lista de itens do carrinho mobile */
+  .carrinho .itens-carrinho {
+    max-height: calc(70vh - 200px);
+    overflow-y: auto;
+    margin-bottom: 15px;
+  }
+
+  .carrinho .total-carrinho {
+    flex-shrink: 0;
+  }
+
+  .carrinho .btn-revisar {
+    flex-shrink: 0;
+  }
+
   /* Modal responsivo em mobile */
   .modal-conteudo {
     width: 95%;
@@ -1085,6 +1103,12 @@ body {
     padding: 15px;
   }
 
+  /* Ajustando altura da lista de revisão no mobile */
+  .lista-revisao {
+    min-height: 150px;
+    max-height: 300px;
+  }
+
   .item-revisao {
     flex-direction: column;
     align-items: flex-start;
@@ -1105,25 +1129,6 @@ body {
   }
 
   .botoes-finalizacao {
-    flex-direction: column;
-  }
-
-  /* Acompanhamento no mobile */
-  .container-acompanhamento {
-    padding: 25px;
-  }
-
-  .confirmacao-pedido h1 {
-    font-size: 24px;
-  }
-
-  .numero-pedido span {
-    font-size: 36px;
-  }
-
-  .btn-novo-pedido {
-    width: 100%;
-    padding: 16px;
-    font-size: 18px;
+    display: flex;
   }
 }
