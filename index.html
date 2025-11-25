@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comilão - Totem de Autoatendimento</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Tela 1: Bem-vindo -->
+    <div id="telaInicial" class="tela ativa">
+        <div class="container-boas-vindas">
+            <div class="logo-grande">🍔 COMILÃO</div>
+            <h1>Bem-vindo ao Comilão!</h1>
+            <p class="subtitulo">O melhor sabor da cidade</p>
+            <button class="btn-iniciar" onclick="iniciarPedido()">
+                TOCAR PARA INICIAR
+            </button>
+        </div>
+    </div>
+
+    <!-- Tela 2: Cardápio / Montagem do Pedido -->
+    <div id="telaCardapio" class="tela">
+        <header class="topo">
+            <div class="logo">🍔 COMILÃO</div>
+            <h2>Monte seu pedido</h2>
+        </header>
+
+        <div class="conteudo-principal">
+            <!-- Barra de categorias -->
+            <nav class="categorias">
+                <button class="btn-categoria ativa" data-categoria="todos" onclick="filtrarPorCategoria('todos')">
+                    Todos
+                </button>
+                <button class="btn-categoria" data-categoria="lanches" onclick="filtrarPorCategoria('lanches')">
+                    🍔 Lanches
+                </button>
+                <button class="btn-categoria" data-categoria="bebidas" onclick="filtrarPorCategoria('bebidas')">
+                    🥤 Bebidas
+                </button>
+                <button class="btn-categoria" data-categoria="sobremesas" onclick="filtrarPorCategoria('sobremesas')">
+                    🍰 Sobremesas
+                </button>
+                <button class="btn-categoria" data-categoria="combos" onclick="filtrarPorCategoria('combos')">
+                    🎁 Combos
+                </button>
+            </nav>
+
+            <!-- Lista de produtos -->
+            <div class="area-produtos" id="listaProdutos">
+                <!-- Produtos serão inseridos aqui via JavaScript -->
+            </div>
+
+            <!-- Carrinho lateral -->
+            <aside class="carrinho" id="carrinhoLateral">
+                <!-- Adicionando botao toggle para mobile -->
+                <div class="carrinho-header" onclick="toggleCarrinhoMobile()">
+                    <h3>Seu Pedido</h3>
+                    <span class="carrinho-toggle" id="carrinhoToggle">▼</span>
+                </div>
+                <div class="carrinho-conteudo" id="carrinhoConteudo">
+                    <div class="itens-carrinho" id="itensCarrinho">
+                        <p class="carrinho-vazio">Carrinho vazio</p>
+                    </div>
+                    <div class="total-carrinho">
+                        <span>Total:</span>
+                        <span class="valor-total" id="valorTotal">R$ 0,00</span>
+                    </div>
+                    <button class="btn-revisar" onclick="irParaRevisao()" id="btnRevisar" disabled>
+                        Revisar Pedido
+                    </button>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Tela 3: Revisão do Pedido / Checkout -->
+    <div id="telaRevisao" class="tela">
+        <header class="topo">
+            <div class="logo">🍔 COMILÃO</div>
+            <h2>Revise seu pedido</h2>
+        </header>
+
+        <div class="conteudo-revisao">
+            <div class="lista-revisao" id="listaRevisao">
+                <!-- Itens da revisão serão inseridos aqui -->
+            </div>
+
+            <div class="area-finalizacao">
+                <div class="info-cliente">
+                    <label for="nomeCliente">Nome (opcional):</label>
+                    <input type="text" id="nomeCliente" placeholder="Digite seu nome">
+                </div>
+
+                <div class="metodos-pagamento">
+                    <h3>Forma de pagamento:</h3>
+                    <div class="opcoes-pagamento">
+                        <button class="btn-pagamento" data-metodo="cartao" onclick="selecionarPagamento('cartao')">
+                            💳 Cartão
+                        </button>
+                        <button class="btn-pagamento" data-metodo="pix" onclick="selecionarPagamento('pix')">
+                            📱 Pix
+                        </button>
+                        <button class="btn-pagamento" data-metodo="dinheiro" onclick="selecionarPagamento('dinheiro')">
+                            💵 Dinheiro
+                        </button>
+                    </div>
+                </div>
+
+                <div class="total-final">
+                    <span>Total do Pedido:</span>
+                    <span class="valor-total-grande" id="valorTotalRevisao">R$ 0,00</span>
+                </div>
+
+                <div class="botoes-finalizacao">
+                    <button class="btn-voltar" onclick="voltarParaCardapio()">
+                        ← Voltar
+                    </button>
+                    <button class="btn-confirmar" onclick="confirmarPedido()" id="btnConfirmar" disabled>
+                        Confirmar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela 4: Acompanhamento do Pedido -->
+    <div id="telaAcompanhamento" class="tela">
+        <div class="container-acompanhamento">
+            <div class="confirmacao-pedido">
+                <div class="icone-sucesso">✓</div>
+                <h1>Pedido Confirmado!</h1>
+                <div class="numero-pedido">
+                    Número do Pedido: <span id="numeroPedido">000</span>
+                </div>
+                <p class="mensagem-aguarde">Aguarde, seu pedido está sendo preparado</p>
+            </div>
+
+            <div class="loader">
+                <div class="spinner"></div>
+            </div>
+
+            <div class="status-pedidos">
+                <div class="coluna-status">
+                    <h3>🔥 Em Preparo</h3>
+                    <div class="lista-status" id="pedidosEmPreparo">
+                        <!-- Pedidos em preparo -->
+                    </div>
+                </div>
+                <div class="coluna-status">
+                    <h3>✅ Prontos</h3>
+                    <div class="lista-status" id="pedidosProntos">
+                        <!-- Pedidos prontos -->
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-novo-pedido" onclick="voltarAoInicio()">
+                Fazer Novo Pedido
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal para detalhes do produto -->
+    <div id="modalProduto" class="modal-overlay" onclick="fecharModal()">
+        <div class="modal-conteudo" onclick="event.stopPropagation()">
+            <button class="modal-fechar" onclick="fecharModal()">×</button>
+            <div class="modal-produto">
+                <div class="modal-emoji" id="modalEmoji">🍔</div>
+                <div class="modal-direita">
+                    <div class="modal-info">
+                        <h3 id="modalNome">Nome do Produto</h3>
+                        <p id="modalDescricao">Descrição do produto</p>
+                        <div class="modal-preco" id="modalPreco">R$ 0,00</div>
+                    </div>
+                    <button class="modal-btn-adicionar" id="modalBtnAdicionar" onclick="">
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
